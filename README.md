@@ -1,5 +1,3 @@
-
-**TODO**: Delete these instructions before you submit your work.
 ## Instructions
 
 1. Read Chapters 2 & 3 of [Pro Git][ProGit]. The chapters are short.
@@ -16,8 +14,6 @@
    ```  
 5. **Test that your answers are correct!** There is **no excuse** for incorrect answers since you can test your answers by experimentation.      
 6. Verify that your Markdown formatting is correct -- points deducted for bad formatting. VS Code and IntelliJ have markdown previewers. You should also preview it on Github, since Github Markdown is a bit non-standard.
-
-**TODO**: Delete these instructions before you submit your work. Points deducted for each "TODO" in this file.
 
 ## Using Git
 
@@ -38,21 +34,24 @@ In this file, directory paths are written with a forward slash as on MacOS, Linu
 ## Basics
 
 1. When using Git locally, what are these?  Define each one in a sentence
-   * Staging area -
-   * Working copy -
-   * master -
-   * HEAD -
+   * Staging area - The staging area is an intermediate area where changes are prepared before they are committed to the Git repository.
+   * Working copy - The working copy is the local directory on your machine where you make modifications to files in your Git repository.
+   * master - The "master" branch is the default branch that is created when initializing a new Git repository.
+   * HEAD - HEAD is a symbolic reference to the most recent commit in the currently checked-out branch.
 
 2. When you install git on a new machine (or in a new user account) you should perform these 2 git commands to tell git your name and email.  These values are used in commits that you make:
    ```
    # Git configuration commands for a new account
-
+   git config --global user.name "Name"
+   git config --global user.email "email"
 
    ```
 
 3. There are 2 ways to create a local Git repository.  Briefly descibe each one:
-   - todo: describe first way to create a local repo
-   - todo: describe second way to create a local repo
+   1. Initializing a Repository in an Existing Directory
+      - Using the 'git init' command to create the existing directory into a Git repository.  
+   2. Cloning a Remote Repository
+      - Using the 'git clone <remote_repository_url>' command to create a local copy of an existing remote Git repository.
 
 
 ## Adding and Changing Things
@@ -69,43 +68,44 @@ test/
     test_a.py
     ...
 ```     
-> TODO: Write the git command to perform each of these:
 
 1. Add README.md and *everything* in the `src` directory to the git staging area.
    ```
-   todo  your answer here
+   git add README.md src/
    ```
 
 2. Add `test/test_a.py` to the staging area (but not any other files).
    ```
-   todo  your answer
+   git add test/test_a.py
    ```
 
 3. List the names of files in the staging area.
    ```
-   todo  your answer
+   git diff --staged --name-only
    ```
 
 4. Remove `README.md` from the staging area. This is **very useful** if you accidentally add something you don't want to commit.
    ```
-   todo  your answer
+   git reset README.md
    ```
 
 5. Commit everything in the staging area to the repository.
    ```
-   todo  your answer
+   git commit -m "message"
    ```
 
 6. In any project, there are some files and directories that you **should not** commit to git.    
    For a Python project, name *at least* files or directories that you should not commit to git:
-   - 
-   - 
-   -
+   - Dependency Management Files: Ex.'requirements.txt', 'Pipfile', 'Pipfile.lock'
+   - Compiled Files and Bytecode: Ex. '*.pyc', '*.pyo'
+   - Log Files: Ex. '*.log'
+   - Build Output and Temporary Files: Ex. '__pycache__/', 'build/', 'dist/'
+   - Virtual Environment Directories: Ex. 'venv/', 'env/'
 
 
 7. Command to move all the .py files from the `src` dir to the top-level directory of this repository. This command moves them in your working copy *and* in the git repo (when you commit the change):
    ```
-
+   git mv src/*.py .
    ```
 
 
@@ -120,17 +120,32 @@ test/
 > For questions where you are showing a command, use triple-backquote marks (as above) so the text is formatted as code.
 
 1.  Display the differences between your *working copy* of `a.py` and the `a.py` in the *local repository* (HEAD revision):
+   ```
+   git diff a.py
+   ```
 
 
 2. Display the differences between your *working copy* of `a.py` and the version in the *staging area*. (But, if a.py is not in the staging area this will compare working copy to HEAD revision):
+   ```
+   git diff --staged a.py
+   ```
 
 3. **View changes to be committed:** Display the differences between files in the staging area and the versions in the repository. (You can also specify a file name to compare just one file.) 
+   ```
+   git diff --staged a.py
+   ```
 
 
 4. **Undo "git add":** If `main.py` has been added to the staging area (`git add main.py`), remove it from the staging area:
+   ```
+   git reset main.py
+   ```
 
 
 5. **Recover a file:** Command to replace your working copy of `a.py` with the most recent (HEAD) version in the repository.  This also works if you have deleted your working copy of this file.
+   ```
+   git checkout a.py
+   ```
 
 
 6. **Undo a commit:** Suppose you want to discard some commit(s) and move both HEAD and "master" to an earlier revision (an earlier commit)  Suppose the git commit graph looks like this (`aaaa`, etc, are the commit ids)
@@ -138,11 +153,14 @@ test/
    aaaa ---> bbbb ---> cccc ---> dddd [HEAD -> master]
    ``` 
    The command to reset HEAD and master to the commit id `bbbb`:
+   ```
+   git reset --hard bbbb
+   ```
 
 
 7. **Checkout old code:** Using the above example, the command to replace your working copy with the files from commit with id `aaaa`:
    ```
-   todo your answer here
+   git checkout aaaa
    ```
     Note:
     - Git won't let you do this if you have uncommitted changes to any "tracked" files.
@@ -159,7 +177,7 @@ test/
 
 2. Show the history (as above) including *all* branches in the repository and include a graph connecting the commits:
    ```
-
+   git log --all --graph
    ```
 
 
@@ -179,22 +197,28 @@ test/
 
 
 ## Branch and Merge
-
-**TODO**: This section is free-form.  Create 4 numbered items for common branch-and-merge tasks you would like to remember and show the git command to do each one. (You are write *more* than 4 if you want.)
-
+```
+   git checkout -b test/test_branch
+   git merge test/main
+   git add <conflicted-files>
+   git commit
+```
 
 
 ## Favorites
+```
+   Git Interactive Rebase
+   - git checkout -b test/test_branch
+   - git checkout main
+   - git commit -m "C1"
+   - git rebase -i overHere --solution-ordering C1
+```
 
-> TODO: Describe *at least* 1 task that you would like to remember, and the git command(s) to do it.
 
-
-
----
 ## Resources
 
-> TODO: Add your favorite Git resources (at least 1)
-
+* [Git Tutorial](https://www.w3schools.com/git/) Learning by Examples.
+* [Git commands](https://www.atlassian.com/git/glossary) Basic Git Commands.
 * [Pro Git Online Book][ProGit] Chapters 2 & 3 contain the essentials. Downloadable e-book is available, too. 
 * [Visual Git Reference](https://marklodato.github.io/visual-git-guide) one page with illustrations of git commands.
 * [Markdown Cheatsheet][markdown-cheatsheet] summary of Markdown commands.
