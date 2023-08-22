@@ -180,7 +180,7 @@ test/
 
 3. List all the files in the current branch of the repository:
    ```
-   todo your answer
+   git ls-tree --name-only HEAD
    ```
    Example output:
    ```
